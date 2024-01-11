@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Script Name:                  Ops Challenge - Uptime Sensor Tool 2/2
+# Author:                       Joe Gutmann
+# Date of latest revision:      10JAN24
+# Purpose:                      Ops Challenge 301: Class 03
+
+
+import time
+import ping3
+import smtplib
+import ssl
+from email.message import EmailMessage
+
+
+#define the email send notifications
+
+def send_email(sender, password, receiver, subject, body):
+        message = EmailMessage
+        message["From"] = sender
+        message["To"] = receiver
+        message["Subject"] = subject
+        message.set_content(body)
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender, password)
+            server.send_message(message)    
+# Here is the request for user input for email credintials. Doing this without having to put my burner email and app pass
+# Inside the code. It does function as is, and is easily changeable to include those details as needed.
+
+email_sender = input("Where are we sending this from? Please provide a complete email addy: ")
+email_password = input("Please insert your app password here to authorize the script to send: ")
+email_receiver = input("Where are we sending it?: ")                        
+
+targetip = input("Enter in an ip address you wish to ping: ") 
+previous_status = None
+
+
+for _ in range(2):
+    timestamp = time.strftime('%Y-%m-%d %H:%M:%S.%f')
+    response_time = ping3.ping(targetip, timeout=2)
+    current_status = "Network Active" if response_time is not None else "Network connection is a no go"
+
+    if current_status != previous_status:
+        if previous_status is not None:
+            subject = f"Host Status Change for {target_ip}"
+            body = f"Host {target_ip} status changed from {previous_status} to {current_status} at {timestamp}"
+            send_email(email_sender, email_password, email_receiver, subject, body)
+
+        previous_status = current_status   
+
+    print(f"{timestamp} {current_status} to {targetip}")
+    time.sleep(2)    
+
+# email specific code from https://towardsdatascience.com/how-to-easily-automate-emails-with-python-8b476045c151 and chunks assisted by chatgpt when
+# I got stuck and for syntax errors I just could not find. 
