@@ -102,3 +102,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    ## edited and corrected syntax with chatgpt. Luckily rinse and repeat got me close enough I did not have to correct the whole thing.
