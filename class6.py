@@ -114,4 +114,4 @@ if __name__ == "__main__":
 
 ## Leveraged chatgpt for this, It took me waaaaaaaaaaaaay to long to realize my original code was not working because somehow I switched vs code locations
 # and did not have the virtual environment venv set up on it. I still do not know why it moved me to a new terminal or anything, but atleast that portion
-# is now working. 
+# is now working. I also got the 401d10 challenges folder reconnected to github and am able to push updates from vs code at this point.
