@@ -1,7 +1,7 @@
 # Script Name:                  Ops Challenge -  Signature-Based Malware Detection 2 of 3
 # Author:                       Joe Gutmann
 # Date of latest revision:      20FEB24
-# Purpose:                      Ops Challenge 401: Class 28
+# Purpose:                      Ops Challenge 401: Class 32
 
 # importing the systems we need
 import hashlib
