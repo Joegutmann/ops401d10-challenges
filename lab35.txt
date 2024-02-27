@@ -1,0 +1,33 @@
+# Script Name:                  Ops Challenge -  Signature-Based Malware Detection 3 of 3
+# Author:                       Joe Gutmann
+# Date of latest revision:      21FEB24
+# Purpose:                      Ops Challenge 401: Class 35g
+
+s = {"safe", "vuln"}
+
+portrule = function(host, port)
+    return port.protocol == "tcp" and port.number == 80 or port.number == 443
+end
+
+action = function(host, port)
+    local http = require "http"
+    local stdnse = require "stdnse"
+    local creds = {
+        {path = "/admin", username = "admin", password = "admin"},
+        -- Add more as needed
+    }
+    for _, cred in ipairs(creds) do
+        local url = stdnse.get_hostname(host) .. ":" .. port.number .. cred.path
+        local response = http.get(host, port, cred.path)
+        if response.status and response.status == 200 then
+            -- Attempt to login or check for login page
+            -- This is a simplified conceptual demonstration.
+            -- Actual implementation would need to handle the login mechanism of the application.
+            return ("Possible default login found at: %s with username: %s and password: %s"):format(url, cred.username, cred.password)
+        end
+    end
+    return "No default credentials found."
+end
+
+
+## utilized https://nmap.org/book/man-nse.html // https://nmap.org/nsedoc/scripts/
