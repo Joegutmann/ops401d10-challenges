@@ -31,3 +31,5 @@ else:
 # Optionally, you can save the output to a file for further analysis
 with open('wapiti_output.txt', 'w') as file:
     file.write(output)
+
+# utilized https://pypi.org/project/wapiti3/ and chatgpt
